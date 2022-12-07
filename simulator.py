@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import json
 import random
 from argparse import ArgumentParser
 
@@ -56,11 +57,11 @@ class Shard:
     }
 
     roll_results = {
+        "Legendary": 0,
+        "Epic": 0,
+        "Rare": 0,
         "Common": 0,
         "Uncommon": 0,
-        "Rare": 0,
-        "Epic": 0,
-        "Legendary": 0,
     }
 
     # These get overridden
@@ -80,6 +81,7 @@ class Shard:
         return random.randint(1, 1000)
 
     def summon(self, is_2x=False, verbose=False) -> int:
+        ''' base logic for simulating a single summon '''
         res = self.roll()
         for idx, rate in enumerate(self.rates):
             min_res, max_res = rate
@@ -100,11 +102,21 @@ class Shard:
         return self.mercy_counter[idx] > min_count
 
     def calc_mercy(self, idx) -> int:
+        ''' calculates the mercy modifier to add to the RNG before doing a summon '''
         min_count, rate = self.mercy_rates[idx]
         mercy_count = self.mercy_counter[idx]
         if not self.has_mercy(idx):
             return 0
         return (mercy_count - min_count) * rate
+
+    def load_mercy(self, fp="mercy.json"):
+        ''' populates the simulator with your provided mercy values '''
+        with open(fp) as f:
+            mercy_values = json.loads(f.read())
+        print(mercy_values)
+        for idx, key in enumerate(mercy_values[self.name]):
+            self.mercy_counter[idx] = mercy_values[self.name][key]
+        print(self.mercy_counter)
 
     def reset_mercy(self, idx) -> None:
         self.mercy_counter[idx] = 0
@@ -127,6 +139,7 @@ class Shard:
     def do_summons(self, count, is_2x=False) -> None:
         if count == 0:
             return
+        self.load_mercy()
         summons = self.bulk_summon(count, is_2x)
         self.save_results(summons)
         self.display_results()
