@@ -113,10 +113,8 @@ class Shard:
         ''' populates the simulator with your provided mercy values '''
         with open(fp) as f:
             mercy_values = json.loads(f.read())
-        print(mercy_values)
         for idx, key in enumerate(mercy_values[self.name]):
             self.mercy_counter[idx] = mercy_values[self.name][key]
-        print(self.mercy_counter)
 
     def reset_mercy(self, idx) -> None:
         self.mercy_counter[idx] = 0
