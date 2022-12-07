@@ -1,18 +1,18 @@
 {
-  "sacred": {
-    "epic": 0,
-    "legendary": 0,
-  }
-  "ancient": {
-    "epic": 0,
-    "legendary": 0,
-  }
-  "void": {
-    "epic": 0,
-    "legendary": 0,
-  }
-  "mystery": {
-    "epic": 0,
-    "legendary": 0,
-  }
+	"sacred": {
+		"epic": 0,
+		"legendary": 0
+	},
+	"ancient": {
+		"epic": 0,
+		"legendary": 0
+	},
+	"void": {
+		"epic": 0,
+		"legendary": 0
+	},
+	"mystery": {
+		"epic": 0,
+		"legendary": 0
+	}
 }
