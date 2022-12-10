@@ -43,7 +43,7 @@ def parse_args():
         default=0,
         help="amount of sacred shards to open",
     )
-    return parser.parse_args(args=None if sys.argv[1:] else ['--help'])
+    return parser.parse_args(args=None if sys.argv[1:] else ["--help"])
 
 
 class Shard:
@@ -81,7 +81,7 @@ class Shard:
         return random.randint(1, 1000)
 
     def summon(self, is_2x=False) -> int:
-        ''' base logic for simulating a single summon '''
+        """base logic for simulating a single summon"""
         res = self.roll()
         for idx, rate in enumerate(self.rates):
             min_res, max_res = rate
@@ -100,7 +100,7 @@ class Shard:
         return self.mercy_counter[idx] > min_count
 
     def calc_mercy(self, idx) -> int:
-        ''' calculates the mercy modifier to add to the RNG before doing a summon '''
+        """calculates the mercy modifier to add to the RNG before doing a summon"""
         min_count, rate = self.mercy_rates[idx]
         mercy_count = self.mercy_counter[idx]
         if not self.has_mercy(idx):
@@ -108,7 +108,7 @@ class Shard:
         return (mercy_count - min_count) * rate
 
     def load_mercy(self, fp="mercy.json") -> None:
-        ''' populates the simulator with your provided mercy values '''
+        """populates the simulator with your provided mercy values"""
         with open(fp) as f:
             mercy_values = json.loads(f.read())
         for idx, key in enumerate(mercy_values[self.name]):
@@ -155,9 +155,6 @@ class SacredShard(Shard):
 
     mercy_counter = [0, 0]
 
-    def __init__(self):
-        super().__init__()
-
 
 class AncientShard(Shard):
     rates = [
@@ -174,14 +171,10 @@ class AncientShard(Shard):
 
     mercy_counter = [0, 0, 0]
 
-    def __init__(self):
-        super().__init__()
-
 
 class VoidShard(AncientShard):
     # These are mathematically the same as Ancient Shards.
-    def __init__(self):
-        super().__init__()
+    pass
 
 
 class MysteryShard(Shard):
@@ -202,9 +195,6 @@ class MysteryShard(Shard):
     ]
 
     mercy_counter = [0, 0, 0, 0, 0]
-
-    def __init__(self):
-        super().__init__()
 
 
 if __name__ == "__main__":
