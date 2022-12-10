@@ -80,7 +80,7 @@ class Shard:
     def roll():
         return random.randint(1, 1000)
 
-    def summon(self, is_2x=False, verbose=False) -> int:
+    def summon(self, is_2x=False) -> int:
         ''' base logic for simulating a single summon '''
         res = self.roll()
         for idx, rate in enumerate(self.rates):
@@ -89,8 +89,6 @@ class Shard:
             max_res += self.calc_mercy(idx)
             if min_res <= res and max_res >= res:
                 self.reset_mercy(idx)
-                if verbose:
-                    print("Summoned:", self.roll_map[idx])
                 return idx
         return 5  # Make the linter shut up.
 
@@ -109,7 +107,7 @@ class Shard:
             return 0
         return (mercy_count - min_count) * rate
 
-    def load_mercy(self, fp="mercy.json"):
+    def load_mercy(self, fp="mercy.json") -> None:
         ''' populates the simulator with your provided mercy values '''
         with open(fp) as f:
             mercy_values = json.loads(f.read())
