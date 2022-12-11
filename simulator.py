@@ -5,6 +5,8 @@ import json
 import random
 from argparse import ArgumentParser
 
+tournament_points = 0
+
 
 def parse_args():
     parser = ArgumentParser()
@@ -64,6 +66,8 @@ class Shard:
         "Uncommon": 0,
     }
 
+    tounament_points_map = [500, 250, 10, 1, 1]  # Legendary -> Common awarded points
+
     # These get overridden
     rates = []
     mercy_rates = []
@@ -76,6 +80,10 @@ class Shard:
     def name(self):
         return self.__repr__()
 
+    @property
+    def can_2x(self):
+        return self.name != "MysteryShard"
+
     @staticmethod
     def roll():
         return random.randint(1, 1000)
@@ -85,7 +93,7 @@ class Shard:
         res = self.roll()
         for idx, rate in enumerate(self.rates):
             min_res, max_res = rate
-            max_res = (max_res * 2) if is_2x else max_res
+            max_res = (max_res * 2) if self.can_2x and is_2x else max_res
             max_res += self.calc_mercy(idx)
             if min_res <= res and max_res >= res:
                 self.reset_mercy(idx)
@@ -124,7 +132,13 @@ class Shard:
     def save_results(self, indexes) -> dict[str, int]:
         for idx in indexes:
             self.roll_results[self.roll_map[idx]] += 1
+            self.add_tournament_points(idx)
         return self.roll_results
+
+    def add_tournament_points(self, idx):
+        global tournament_points
+        val = self.tounament_points_map[idx]
+        tournament_points += val
 
     def display_results(self) -> None:
         print(f"{self.name} results:")
@@ -173,8 +187,8 @@ class AncientShard(Shard):
 
 
 class VoidShard(AncientShard):
-    # These are mathematically the same as Ancient Shards.
-    pass
+    # These are mostly mathematically the same as Ancient Shards.
+    tournament_points_map = [650, 350, 50, 1, 1]  # Legendary -> Common awarded points
 
 
 class MysteryShard(Shard):
@@ -205,3 +219,5 @@ if __name__ == "__main__":
     AncientShard().do_summons(args.ancient_shards, args.double_chance)
     VoidShard().do_summons(args.void_shards, args.double_chance)
     MysteryShard().do_summons(args.mystery_shards, args.double_chance)
+    print()
+    print("Tournament Points Earned:", tournament_points)
