@@ -17,7 +17,7 @@ Well, then just go [here](https://gist.github.com/JackofSpades707/5e9c9da9ba3c51
 Essentially, during a 2x event, you want an average of 88 ancient shards to pull a legendary when taking the mercy system into account (based off 100_000 iterations of simulations).
 
 ## Why is this a Command-Line tool?
-* I didn't want to spend more than a few hours until I had a fully working version, CLI's are fun, easy, and quick to write.
+* CLI's are fun, easy, and quick to write. (And I wanted this done quickly)
 * I personally prefer CLI tools generally.
 * The data/functionality being correct matters the most for this.
 
