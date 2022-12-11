@@ -187,7 +187,7 @@ class AncientShard(Shard):
 
 
 class VoidShard(AncientShard):
-    # These are mostly mathematically the same as Ancient Shards.
+    # The summoning rates are mathematically the same as Ancient Shards.
     tournament_points_map = [650, 350, 50, 1, 1]  # Legendary -> Common awarded points
 
 
