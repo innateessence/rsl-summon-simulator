@@ -1,4 +1,6 @@
 ## Raid Shadow Legends Summon Simulator
+This essentially just simulates opening shards on Raid Shadow Legends.
+I wrote it for fun
 
 ## Usage examples:
 * `python simulator.py --ancient-shards 50 -2x` - open 50 ancient shards with 2x event rates
