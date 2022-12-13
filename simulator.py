@@ -3,6 +3,7 @@
 import sys
 import json
 import random
+from pathlib import Path
 from argparse import ArgumentParser
 
 tournament_points = 0
@@ -115,8 +116,9 @@ class Shard:
             return 0
         return (mercy_count - min_count) * rate
 
-    def load_mercy(self, fp="mercy.json") -> None:
+    def load_mercy(self, filename="mercy.json") -> None:
         """populates the simulator with your provided mercy values"""
+        fp = Path(__file__).parent.absolute() / filename
         with open(fp) as f:
             mercy_values = json.loads(f.read())
         for idx, key in enumerate(mercy_values[self.name]):
