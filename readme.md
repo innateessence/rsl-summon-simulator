@@ -6,7 +6,8 @@ I wrote it for fun
 * `python simulator.py --ancient-shards 50 -2x` - open 50 ancient shards with 2x event rates
 
 ## Screenshots
-![Example Useage](https://i.imgur.com/1DSzxe5.png)
+![Example Usage](https://i.imgur.com/1DSzxe5.png)
+![Example Help](https://i.imgur.com/ktoXj8t.png)
 
 ## Mercy system:
 * This works, just enter your mercy values in mercy.json. You can use RSL-helper to figure out your mercy values.
